@@ -37,6 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
+    'rest_framework',
+    'rest_framework_simplejwt',
+    'drf_yasg',  # For Swagger
+    'user_profile',  # Add your app name here
 ]
 
 MIDDLEWARE = [
@@ -45,11 +50,19 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'BILL_EAZZ.urls'
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOW_HEADERS = [
+    'authorization',
+    'content-type',
+]
 
 TEMPLATES = [
     {
@@ -75,8 +88,12 @@ WSGI_APPLICATION = 'BILL_EAZZ.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'Bill_Eazz',        # Replace with your database name
+        'USER': 'postgres',        # Replace with your PostgreSQL username
+        'PASSWORD': 'Karthik@1234',  # Replace with your database password
+        'HOST': 'localhost',                  # Use 'localhost' if you're running PostgreSQL locally
+        'PORT': '5432',                       # Default PostgreSQL port
     }
 }
 
@@ -121,3 +138,28 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# settings.py
+from rest_framework_simplejwt.settings import api_settings
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    'USER_ID_FIELD': 'user_id',  # Replace with your custom user ID field name
+    'USER_ID_CLAIM': 'user_id',
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=6),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': False,
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'VERIFYING_KEY': None,
+    'AUDIENCE': None,
+    'ISSUER': None,
+    'JWK_URL': None,
+}
+
+
+from rest_framework_simplejwt.settings import api_settings
+
+api_settings.USER_ID_FIELD = "user_id"
