@@ -258,8 +258,9 @@ class UserProfileView(APIView):
                     properties={
                         "user_id": openapi.Schema(type=openapi.TYPE_STRING, description="User ID"),
                         "refresh_token": openapi.Schema(type=openapi.TYPE_STRING, description="Refresh token"),
+                        "access_token": openapi.Schema(type=openapi.TYPE_STRING, description="Access token"),
                     },
-                    required=["user_id"],
+                    required=["user_id","refresh_token","access_token"],
                 ),
             },
             required=["auth_params"],
@@ -309,7 +310,6 @@ class UserProfileView(APIView):
     )
     @authenticate_user_session
     def post(self, request):
-        print("aa")
         # Extract the authenticated user from the request
         user = getattr(request, "user", None)
         
