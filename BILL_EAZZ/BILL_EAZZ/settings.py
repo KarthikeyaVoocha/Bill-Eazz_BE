@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-
 import os
 from dotenv import load_dotenv
 
@@ -20,7 +19,6 @@ load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -33,9 +31,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['13.60.216.190', 'localhost', '127.0.0.1']
 
-
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -145,7 +141,8 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# settings.py
+
+# REST Framework settings for JWT
 from rest_framework_simplejwt.settings import api_settings
 from datetime import timedelta
 
@@ -165,7 +162,15 @@ SIMPLE_JWT = {
     'JWK_URL': None,
 }
 
+# Default permissions for DRF views (public access to Swagger UI)
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',  # Allows unauthenticated access to API documentation
+    ],
+}
 
+
+# settings.py for drf-yasg Swagger UI
 from rest_framework_simplejwt.settings import api_settings
 
 api_settings.USER_ID_FIELD = "user_id"
