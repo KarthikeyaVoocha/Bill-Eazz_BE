@@ -42,7 +42,8 @@ def authenticate_user_session(view_func):
 
         # Extract authentication parameters
         auth_params = request.data.get("auth_params", {})
-        access_token = auth_params.get("access_token", "")
+        access_token = request.headers.get("Accesstoken", "")
+        print(request.headers)
         refresh_token = auth_params.get("refresh_token", "")
         user_id = auth_params.get("user_id", "")
 

@@ -174,3 +174,7 @@ REST_FRAMEWORK = {
 from rest_framework_simplejwt.settings import api_settings
 
 api_settings.USER_ID_FIELD = "user_id"
+
+
+
+

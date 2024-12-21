@@ -15,12 +15,9 @@ from .serializers import (
 from .decorators import authenticate_user_session
 from django.contrib.auth.hashers import make_password, check_password
 
-
-# Define HEADER_PARAMS as a list of openapi.Parameter
 HEADER_PARAMS = {
     'access_token': openapi.Parameter('accesstoken', openapi.IN_HEADER, description="local header param", type=openapi.IN_HEADER),
 }
-
 
 class UserSignupView(APIView):
     @swagger_auto_schema(
@@ -245,10 +242,11 @@ class TokenRefreshView(APIView):
         except Exception:
             return Response({"error": "Invalid or expired refresh token"}, status=status.HTTP_401_UNAUTHORIZED)
 
-from django.utils.decorators import method_decorator
+
 class UserProfileView(APIView):
     @swagger_auto_schema(
         operation_description="Retrieve the user's profile information using `auth_params`.",
+        manual_parameters=[HEADER_PARAMS['access_token']],
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
             properties={
@@ -258,9 +256,8 @@ class UserProfileView(APIView):
                     properties={
                         "user_id": openapi.Schema(type=openapi.TYPE_STRING, description="User ID"),
                         "refresh_token": openapi.Schema(type=openapi.TYPE_STRING, description="Refresh token"),
-                        "access_token": openapi.Schema(type=openapi.TYPE_STRING, description="Access token"),
                     },
-                    required=["user_id","refresh_token","access_token"],
+                    required=["user_id","refresh_token"],
                 ),
             },
             required=["auth_params"],
