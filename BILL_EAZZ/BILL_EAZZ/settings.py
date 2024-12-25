@@ -61,6 +61,10 @@ ROOT_URLCONF = 'BILL_EAZZ.urls'
 
 CORS_ALLOW_ALL_ORIGINS = True
 
+CORS_ALLOW_HEADERS = [
+    '*',  # Allows all headers
+]
+
 CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOW_METHODS = [
