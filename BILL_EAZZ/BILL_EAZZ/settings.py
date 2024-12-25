@@ -119,6 +119,9 @@ DATABASES = {
     }
 }
 
+FIRESTORE_CREDENTIALS = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
